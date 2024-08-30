@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+SOURCES=$(ls -1 /etc/shepard)
+
+for source in "$SOURCES"; do
+  herd start "$source"
+done
+
+function stop() {
+  SOURCES=$(ls -1 /etc/shepard)
+  for source in "$SOURCES"; do
+    herd stop "$source"
+  done
+}
+
+function shutdown() {
+  stop
+}
+
+while true; do
+  trap stop SIGSTOP || trap shutdown SIGPWR
+done
