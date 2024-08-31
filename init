@@ -17,6 +17,9 @@ function shutdown() {
   stop
 }
 
+trap stop SIGSTOP
+trap shutdown SIGPWR
+
 while true; do
-  trap stop SIGSTOP || trap shutdown SIGPWR
+   sleep 1
 done
