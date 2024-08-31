@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 
-SOURCES=$(ls -1 /etc/shepard)
+SOURCES="$(ls -1 /etc/shepard)"
 
 for source in "$SOURCES"; do
   herd start "$source"
 done
 
 function stop() {
-  SOURCES=$(ls -1 /etc/shepard)
+  SOURCES="$(ls -1 /etc/shepard)"
   for source in "$SOURCES"; do
     herd stop "$source"
   done
