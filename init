@@ -11,9 +11,6 @@ function shutdown() {
   stop
 }
 
-trap stop SIGSTOP
-trap shutdown SIGPWR
-
 run() {
   while true; do
     echo "starting $1"
@@ -32,15 +29,19 @@ function start() {
   for source in "$SOURCES"; do
     run "$source" &
   done
-
   wait
 }
 
 function restart() {
   stop
   start
+  trap stop SIGSTOP
+  trap shutdown SIGPWR
+  trap restart SIGHUP
 }
 
+trap stop SIGSTOP
+trap shutdown SIGPWR
 trap restart SIGHUP
 
 start
