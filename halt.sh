@@ -8,7 +8,6 @@ for ps in "$PS"; do
   kill -s SIGSTOP "$ps"
 done
 
-sleep 8
 PS="$(ps ax | awk '{print $1}')"
 
 for ps in "$PS"; do
@@ -16,11 +15,11 @@ for ps in "$PS"; do
 done
 
 for dev in "$(ls -1 /media)"; do
-  umount "$dev"
+  umount "/media/$dev"
 done
 
 for dev in "$(ls -1 /mnt)"; do
-  umount "$dev"
+  umount "/mnt/$dev"
 done
 
 umount /boot
