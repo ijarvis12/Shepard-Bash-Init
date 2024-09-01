@@ -4,7 +4,7 @@ start() {
   echo "starting $1"
   ("/etc/shepard/$1" & && \
   sleep 2 && \
-  PID=$(ps fax | grep "$1" | grep -v grep | head -1 | awk '{print $1}') && \
+  PID=$(ps ax | grep "$1" | grep -v grep | head -1 | awk '{print $1}') && \
   echo "$1 started with PID of $PID" && \
   echo "started $1 ["$(tput setaf 2)'OK'$(tput sgr0)"]") || \
   echo "started $1 ["$(tput setaf 1)'NOT OK'$(tput sgr0)"]"
@@ -12,7 +12,7 @@ start() {
 
 stop() {
   echo "stopping $1"
-  PID=$(ps fax | grep "$1" | grep -v grep | head -1 | awk '{print $1}')
+  PID=$(ps ax | grep "$1" | grep -v grep | head -1 | awk '{print $1}')
   (kill "$PID" && \
   echo "$1 stopped ["$(tput setaf 2)'OK'$(tput sgr0)"]") || \
   echo "$1 stopped ["$(tput setaf 1)'NOT OK'$(tput sgr0)"]"
