@@ -20,6 +20,15 @@ function shutdown() {
 trap stop SIGSTOP
 trap shutdown SIGPWR
 
+PS=$(ps x | grep -v ps | grep -v init | grep -v grep | awk '{print $5}')
+
+function run() {
+  for ps in "$PS"; do
+     wait "$ps" && herd start "$ps"
+  done
+}
+
 while true; do
-   sleep 1
+  run &
+  wait
 done
