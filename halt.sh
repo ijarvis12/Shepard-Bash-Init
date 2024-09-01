@@ -2,7 +2,7 @@
 
 kill -s SIGPWR 1
 
-PS="$(ps fax | awk '{print $1}')"
+PS="$(ps ax | awk '{print $1}')"
 
 for ps in "$PS"; do
   kill -s SIGSTOP "$ps"
