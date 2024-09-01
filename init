@@ -27,9 +27,20 @@ run() {
   done
 }
 
-SOURCES="$(ls -1 /etc/shepard)"
-for source in "$SOURCES"; do
-   run "$source" &
-done
+function start() {
+  SOURCES="$(ls -1 /etc/shepard)"
+  for source in "$SOURCES"; do
+    run "$source" &
+  done
 
-wait
+  wait
+}
+
+function restart() {
+  stop
+  start
+}
+
+trap restart SIGHUP
+
+start
