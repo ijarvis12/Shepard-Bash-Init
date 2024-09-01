@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
 function stop() {
-  SOURCES="$(ls -1 /etc/shepard)"
-  for source in "$SOURCES"; do
-    herd stop "$source"
+  JOBS="$(jobs -p)"
+  for job in "$JOBS"; do
+    kill "$job"
   done
 }
 
