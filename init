@@ -17,8 +17,7 @@ trap shutdown SIGPWR
 function run() {
   SOURCES="$(ls -1 /etc/shepard)"
   for source in "$SOURCES"; do
-     ps="$(cat $source)"
-     herd start "$ps"
+     herd start "$source"
   done
 }
 
