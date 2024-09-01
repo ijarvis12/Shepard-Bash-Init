@@ -14,15 +14,22 @@ function shutdown() {
 trap stop SIGSTOP
 trap shutdown SIGPWR
 
-function run() {
-  SOURCES="$(ls -1 /etc/shepard)"
-  for source in "$SOURCES"; do
-     herd start "$source"
+run() {
+  while true; do
+    echo "starting $1"
+    ("/etc/shepard/$1" & && \
+    sleep 2 && \
+    PID=$(ps ax | grep "$1" | grep -v grep | head -1 | awk '{print $1}') && \
+    echo "$1 started with PID of $PID" && \
+    echo "started $1 ["$(tput setaf 2)'OK'$(tput sgr0)"]") || \
+    echo "started $1 ["$(tput setaf 1)'NOT OK'$(tput sgr0)"]"
+    wait
   done
 }
 
-run
-
-while true; do
-  sleep 1
+SOURCES="$(ls -1 /etc/shepard)"
+for source in "$SOURCES"; do
+   run "$source" &
 done
+
+wait
