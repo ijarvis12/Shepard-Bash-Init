@@ -35,8 +35,6 @@ function start() {
 function restart() {
   stop
   start
-  trap stop SIGSTOP
-  trap shutdown SIGPWR
   trap restart SIGHUP
 }
 
