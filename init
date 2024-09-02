@@ -14,7 +14,7 @@ function shutdown() {
 run() {
   while true; do
     echo "starting $1"
-    ("/etc/shepard/$1" & && \
+    (/etc/shepard/$1 & && \
     sleep 2 && \
     PID=$(ps ax | grep "$1" | grep -v grep | head -1 | awk '{print $1}') && \
     echo "$1 started with PID of $PID" && \
