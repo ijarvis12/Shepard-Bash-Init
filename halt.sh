@@ -2,16 +2,16 @@
 
 kill -s SIGPWR 1
 
-PS="$(ps ax | awk '{print $1}')"
+PROCS="$(ps ax | awk '{print $1}')"
 
-for ps in "$PS"; do
-  kill -s SIGSTOP "$ps"
+for proc in "$PROCS"; do
+  kill -s SIGSTOP $proc
 done
 
-PS="$(ps ax | awk '{print $1}')"
+PROCS="$(ps ax | awk '{print $1}')"
 
-for ps in "$PS"; do
-  kill "$ps"
+for proc in "$PROCS"; do
+  kill $proc
 done
 
 for dev in "$(ls -1 /media)"; do
