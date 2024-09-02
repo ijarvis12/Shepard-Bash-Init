@@ -7,7 +7,7 @@ function stop() {
   done
   PROCS="$(ls -1 /etc/shepard)"
   for proc in "$PROCS"; do
-    pid=$(ps ax | grep "$proc" | grep -v grep | head -1 | awk '{print $1}')
+    pid=$(ps ax | grep "$proc" | grep -v grep | tail -1 | awk '{print $1}')
     kill $pid
   done
 }
@@ -21,7 +21,7 @@ run() {
     echo "starting $1"
     (/etc/shepard/$1 & && \
     sleep 2 && \
-    pid=$(ps ax | grep "$1" | grep -v grep | head -1 | awk '{print $1}') && \
+    pid=$(ps ax | grep "$1" | grep -v grep | tail -1 | awk '{print $1}') && \
     echo "$1 started with PID of $pid" && \
     echo "started $1 [ "$(tput setaf 2)'OK'$(tput sgr0)" ]") || \
     echo "started $1 [ "$(tput setaf 1)'NOT OK'$(tput sgr0)" ]"
