@@ -4,7 +4,7 @@ function start() {
   echo "starting $1"
   ("/etc/shepard/$1" & && \
   sleep 2 && \
-  pid=$(ps ax | grep "$1" | grep -v grep | head -1 | awk '{print $1}') && \
+  pid=$(ps ax | grep "$1" | grep -v grep | tail -1 | awk '{print $1}') && \
   echo "$1 started with PID of $pid" && \
   echo "started $1 [ "$(tput setaf 2)'OK'$(tput sgr0)" ]") || \
   echo "started $1 [ "$(tput setaf 1)'NOT OK'$(tput sgr0)" ]"
@@ -12,7 +12,7 @@ function start() {
 
 function stop() {
   echo "stopping $1"
-  pid=$(ps ax | grep "$1" | grep -v grep | head -1 | awk '{print $1}')
+  pid=$(ps ax | grep "$1" | grep -v grep | tail -1 | awk '{print $1}')
   (kill "$pid" && \
   echo "$1 stopped [ "$(tput setaf 2)'OK'$(tput sgr0)" ]") || \
   echo "$1 stopped [ "$(tput setaf 1)'NOT OK'$(tput sgr0)" ]"
