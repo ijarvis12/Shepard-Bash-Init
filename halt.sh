@@ -2,13 +2,13 @@
 
 kill -s SIGPWR 1
 
-PROCS="$(ps ax | awk '{print $1}')"
+PROCS=$(ps ax | awk '{print $1}')
 
 for proc in "$PROCS"; do
   kill -s SIGSTOP $proc
 done
 
-PROCS="$(ps ax | awk '{print $1}')"
+PROCS=$(ps ax | awk '{print $1}')
 
 for proc in "$PROCS"; do
   kill $proc
