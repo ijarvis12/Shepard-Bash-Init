@@ -2,7 +2,8 @@
 
 function start() {
   echo "starting $1"
-  ("/etc/shepard/$1" & && \
+  (chmod +x "/etc/shepard/$1" && \
+  /etc/shepard/$1 & && \
   sleep 2 && \
   pid=$(ps ax | grep "$1" | grep -v grep | tail -1 | awk '{print $1}') && \
   echo "$1 started with PID of $pid" && \
@@ -12,6 +13,7 @@ function start() {
 
 function stop() {
   echo "stopping $1"
+  chmod -x "/etc/shepard/$1"
   pid=$(ps ax | grep "$1" | grep -v grep | tail -1 | awk '{print $1}')
   (kill "$pid" && \
   echo "$1 stopped [ "$(tput setaf 2)'OK'$(tput sgr0)" ]") || \
