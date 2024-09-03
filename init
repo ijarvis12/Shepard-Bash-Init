@@ -29,6 +29,7 @@ run() {
 function start() {
   SOURCES="$(ls -1 /etc/shepard)"
   for source in "$SOURCES"; do
+    echo "staring $source"
     run "$source" & || echo "started $source [ "$(tput setaf 1)'NOT OK'$(tput sgr0)" ]"
   done
   wait
