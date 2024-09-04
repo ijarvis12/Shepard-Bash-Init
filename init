@@ -7,9 +7,11 @@ function stop() {
   done
   PROCS="$(ls -1 /etc/shepard)"
   for proc in "$PROCS"; do
-    echo "stopping $proc"
     pid=$(ps ax | grep "$proc" | grep -v grep | tail -1 | awk '{print $1}')
-    kill $pid
+    if [[ -n "$pid" ]]; then
+      echo "stopping $proc"
+      kill $pid
+    fi
   done
 }
 
@@ -30,8 +32,10 @@ run() {
 function start() {
   SOURCES="$(ls -1 /etc/shepard)"
   for source in "$SOURCES"; do
-    echo "staring $source"
-    run "$source" & || echo "started $source [ "$(tput setaf 1)'NOT OK'$(tput sgr0)" ]"
+    if [[ -x /etc/shepard/$source ]]; then
+      echo "staring $source"
+      run "$source" & || echo "started $source [ "$(tput setaf 1)'NOT OK'$(tput sgr0)" ]"
+    fi
   done
   wait
 }
