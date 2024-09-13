@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-function start() {
+start() {
   echo "starting $1"
   (chmod +x "/etc/shepard/$1" && \
   /etc/shepard/$1 & && \
@@ -11,16 +11,16 @@ function start() {
   echo "started $1 [ "$(tput setaf 1)'NOT OK'$(tput sgr0)" ]"
 }
 
-function stop() {
+stop() {
   echo "stopping $1"
   chmod -x "/etc/shepard/$1"
   pid=$(ps ax | grep "$1" | grep -v grep | head -1 | awk '{print $1}')
-  (kill "$pid" && \
+  (kill $pid && \
   echo "$1 stopped [ "$(tput setaf 2)'OK'$(tput sgr0)" ]") || \
   echo "$1 stopped [ "$(tput setaf 1)'NOT OK'$(tput sgr0)" ]"
 }
 
-function reload() {
+reload() {
   kill -s SIGHUP 1
 }
 
